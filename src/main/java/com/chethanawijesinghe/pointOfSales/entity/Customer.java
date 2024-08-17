@@ -36,5 +36,13 @@ public class Customer {
  @Column(name="active_state",columnDefinition ="TINYINT default 1" )
  private boolean activeStatus;
 
+    public Customer(String customerName, String customerAddress, double customerSalary, String nic, int customerNumber, boolean activeStatus) {
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerSalary = customerSalary;
+        this.nic = nic;
+        this.customerNumber = customerNumber;
+        this.activeStatus = activeStatus;
+    }
 
 }
