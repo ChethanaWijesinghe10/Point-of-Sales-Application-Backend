@@ -13,4 +13,6 @@ public interface CustomerService {
     String deleteCustomer(int customerId);
 
     List<CustomerDTO> getAllCustomers();
+
+    CustomerDTO getCustomerByNic(String nic);
 }

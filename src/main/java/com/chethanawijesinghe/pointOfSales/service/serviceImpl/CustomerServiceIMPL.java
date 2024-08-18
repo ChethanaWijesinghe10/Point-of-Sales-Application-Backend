@@ -5,12 +5,18 @@ import com.chethanawijesinghe.pointOfSales.dto.RequestUpdateCustomerDTO;
 import com.chethanawijesinghe.pointOfSales.entity.Customer;
 import com.chethanawijesinghe.pointOfSales.repository.CustomerRepo;
 import com.chethanawijesinghe.pointOfSales.service.CustomerService;
+import com.chethanawijesinghe.pointOfSales.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceIMPL implements CustomerService {
@@ -68,7 +74,7 @@ public class CustomerServiceIMPL implements CustomerService {
         }
 
     }
-
+    //Get all the customer list
     @Override
     public List<CustomerDTO> getAllCustomers() {
         List<Customer>getCustomer=customerRepo.findAll();
@@ -86,6 +92,28 @@ public class CustomerServiceIMPL implements CustomerService {
             customerDTOList.add(customerDTO);
         }
         return customerDTOList;
+
+    }
+
+    @Override
+    public CustomerDTO getCustomerByNic(String nic) {
+        Optional<Customer> customer = customerRepo.findByNicEquals(nic);
+        if (customer.isPresent()) {
+            CustomerDTO customerDTO = new CustomerDTO(
+                    customer.get().getCustomerId(),
+                    customer.get().getCustomerName(),
+                    customer.get().getCustomerAddress(),
+                    customer.get().getCustomerSalary(),
+                    customer.get().getNic(),
+                    customer.get().getCustomerNumber(),
+                    customer.get().isActiveStatus()
+            );
+            return customerDTO;
+        } else {
+            throw new RuntimeException("Customer not found");
+
+        }
+
 
     }
 }

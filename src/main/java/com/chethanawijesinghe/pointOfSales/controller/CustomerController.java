@@ -63,6 +63,20 @@ public String deleteCustomer(@PathVariable(value = "id") int customerId){
             HttpStatus.OK
     );
   }
+
+
+
+  //Get customer by nic
+  @GetMapping(path="/get-by-nic",
+          params="nic")
+  public ResponseEntity<StandardResponse> getCustomerById(@RequestParam (value = "nic") String nic){
+    CustomerDTO customerDTO=customerService.getCustomerByNic(nic)  ;
+
+    return new ResponseEntity<StandardResponse>(
+            new StandardResponse(200,"The customer of the specific nic is displayed. ",customerDTO),
+            HttpStatus.OK
+    );
+  }
   }
 
 
