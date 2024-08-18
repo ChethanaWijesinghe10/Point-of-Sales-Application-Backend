@@ -7,4 +7,6 @@ public interface CustomerService {
     void saveCustomer(CustomerDTO customerDTO);
 
     void updateCustomer(RequestUpdateCustomerDTO requestUpdateCustomerDTO);
+
+    String deleteCustomer(int customerId);
 }

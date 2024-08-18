@@ -2,6 +2,7 @@ package com.chethanawijesinghe.pointOfSales.controller;
 
 import com.chethanawijesinghe.pointOfSales.dto.CustomerDTO;
 import com.chethanawijesinghe.pointOfSales.dto.RequestUpdateCustomerDTO;
+import com.chethanawijesinghe.pointOfSales.repository.CustomerRepo;
 import com.chethanawijesinghe.pointOfSales.service.CustomerService;
 import com.chethanawijesinghe.pointOfSales.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class CustomerController {
 
   @Autowired
     CustomerService customerService;
+
+  @Autowired
+  private CustomerRepo customerRepo;
 
   //method to save new customers
     @PostMapping(path = "/save-customer")
@@ -38,4 +42,14 @@ public class CustomerController {
             HttpStatus.OK
     );
   }
+
+
+  //Delete customers
+@DeleteMapping(path="/delete/{id}")
+public String deleteCustomer(@PathVariable(value = "id") int customerId){
+  String deleted=customerService.deleteCustomer(customerId);
+  return deleted;
 }
+  }
+
+
