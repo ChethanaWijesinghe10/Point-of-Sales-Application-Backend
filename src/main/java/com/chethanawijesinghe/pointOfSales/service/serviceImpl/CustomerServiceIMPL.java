@@ -1,6 +1,7 @@
 package com.chethanawijesinghe.pointOfSales.service.serviceImpl;
 
 import com.chethanawijesinghe.pointOfSales.dto.CustomerDTO;
+import com.chethanawijesinghe.pointOfSales.dto.RequestUpdateCustomerDTO;
 import com.chethanawijesinghe.pointOfSales.entity.Customer;
 import com.chethanawijesinghe.pointOfSales.repository.CustomerRepo;
 import com.chethanawijesinghe.pointOfSales.service.CustomerService;
@@ -34,4 +35,22 @@ public class CustomerServiceIMPL implements CustomerService {
         }
 
     }
-}
+
+    @Override
+    public void updateCustomer(RequestUpdateCustomerDTO customerDTO) {
+        if(customerRepo.existsById(customerDTO.getCustomerId())){
+            Customer customer= customerRepo.getById(customerDTO.getCustomerId());
+
+            customer.setCustomerName(customerDTO.getCustomerName());
+            customer.setCustomerAddress(customerDTO.getCustomerAddress());
+            customer.setCustomerSalary(customerDTO.getCustomerSalary());
+            customerRepo.save(customer);
+
+        }
+        else{
+            throw new RuntimeException("Customer is not in database");
+        }
+
+        }
+    }
+
