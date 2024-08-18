@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomerServiceIMPL implements CustomerService {
 
@@ -63,6 +66,26 @@ public class CustomerServiceIMPL implements CustomerService {
         else {
             return  "No Customer found in that id.";
         }
+
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer>getCustomer=customerRepo.findAll();
+        List<CustomerDTO> customerDTOList =new ArrayList<>();
+        for (Customer customer: getCustomer ) {
+            CustomerDTO customerDTO = new CustomerDTO(
+                    customer.getCustomerId(),
+                    customer.getCustomerName(),
+                    customer.getCustomerAddress(),
+                    customer.getCustomerSalary(),
+                    customer.getNic(),
+                    customer.getCustomerNumber(),
+                    customer.isActiveStatus()
+            );
+            customerDTOList.add(customerDTO);
+        }
+        return customerDTOList;
 
     }
 }

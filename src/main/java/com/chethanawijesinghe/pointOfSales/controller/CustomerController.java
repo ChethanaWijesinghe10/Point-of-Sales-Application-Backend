@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/customer")
 @CrossOrigin
@@ -50,6 +52,17 @@ public String deleteCustomer(@PathVariable(value = "id") int customerId){
   String deleted=customerService.deleteCustomer(customerId);
   return deleted;
 }
+
+
+//to get all customers
+  @GetMapping(path = "/get-all-customers")
+  public ResponseEntity<StandardResponse> getAllCustomers(){
+    List<CustomerDTO> allCustomers =customerService.getAllCustomers();
+    return new ResponseEntity<StandardResponse>(
+            new StandardResponse(200,"All the customers are displayed",allCustomers),
+            HttpStatus.OK
+    );
+  }
   }
 
 
