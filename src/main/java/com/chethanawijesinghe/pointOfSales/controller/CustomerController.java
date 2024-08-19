@@ -77,6 +77,17 @@ public String deleteCustomer(@PathVariable(value = "id") int customerId){
             HttpStatus.OK
     );
   }
+
+
+  //Get customers by active state
+  @GetMapping(path = "/get-all-customers-by-active-state/{status}")
+  public ResponseEntity<StandardResponse> getAllCustomersByActiveState(@PathVariable (value = "status") boolean activeStatus){
+    List<CustomerDTO> allCustomers= customerService.getAllCustomersByActiveStatus(activeStatus);
+    return new ResponseEntity<StandardResponse>(
+            new StandardResponse(200,"All the customers who are active are displayed. ",allCustomers),
+            HttpStatus.OK
+    );
+    }
   }
 
 
