@@ -14,4 +14,6 @@ public interface CustomerRepo  extends JpaRepository<Customer,Integer> {
     Optional<Customer> findByNicEquals(String nic);
 
     List<Customer> findAllByActiveStatusEquals(boolean activeStatus);
+
+    List<Customer> findAllByCustomerNameIsAndActiveStatusEquals(String customerName, boolean b);
 }

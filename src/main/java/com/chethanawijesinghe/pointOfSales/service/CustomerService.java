@@ -17,4 +17,6 @@ public interface CustomerService {
     CustomerDTO getCustomerByNic(String nic);
 
     List<CustomerDTO> getAllCustomersByActiveStatus(boolean activeStatus);
+
+    List<CustomerDTO> getAllCustomersByActiveStatusAndName(String customerName);
 }
