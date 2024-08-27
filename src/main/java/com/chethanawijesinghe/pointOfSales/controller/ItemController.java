@@ -2,6 +2,7 @@ package com.chethanawijesinghe.pointOfSales.controller;
 
 import com.chethanawijesinghe.pointOfSales.dto.ItemDTO;
 import com.chethanawijesinghe.pointOfSales.dto.RequestItemSaveDTO;
+import com.chethanawijesinghe.pointOfSales.dto.paginated.PaginatedResponseItemDTO;
 import com.chethanawijesinghe.pointOfSales.service.ItemService;
 import com.chethanawijesinghe.pointOfSales.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,24 @@ public class ItemController {
                 new StandardResponse(200,"Success",itemDTOS),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping(path = {"/get-all-item-by-status"},
+            params={"page","size","activeState"}
+    )
+    public ResponseEntity<StandardResponse> getAllItemsActive(
+            @RequestParam (value = "page") int page,
+
+            @RequestParam(value = "size")  int size,
+            @RequestParam(value = "activeState") boolean activeState
+    ){
+
+
+        PaginatedResponseItemDTO paginatedResponseItemDTO  =itemService.getItemActive(page,size,activeState);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Success",paginatedResponseItemDTO),
+                HttpStatus.OK
+        );
+
     }
 }
