@@ -1,7 +1,10 @@
 package com.chethanawijesinghe.pointOfSales.service.serviceImpl;
 
 import com.chethanawijesinghe.pointOfSales.config.ModelMappingConfig;
+import com.chethanawijesinghe.pointOfSales.dto.OrderDetailsInterface;
 import com.chethanawijesinghe.pointOfSales.dto.RequestOrderSaveDTO;
+import com.chethanawijesinghe.pointOfSales.dto.Response.ResponseOrderDetailsDTO;
+import com.chethanawijesinghe.pointOfSales.dto.paginated.PaginatedResponseOrderDetailsDTO;
 import com.chethanawijesinghe.pointOfSales.entity.Order;
 import com.chethanawijesinghe.pointOfSales.entity.OrderDetails;
 import com.chethanawijesinghe.pointOfSales.repository.CustomerRepo;
@@ -12,9 +15,11 @@ import com.chethanawijesinghe.pointOfSales.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,5 +68,28 @@ public class OrderServiceIMPL implements OrderService {
         }
     }
 
+    @Override
+    public PaginatedResponseOrderDetailsDTO getAllOrderDetails(boolean state, int page, int size) {
+        List<OrderDetailsInterface> orderDetailsInterfaces = orderRepo.getAllOrderDetails(state, PageRequest.of(page,size));
 
-}
+        List<ResponseOrderDetailsDTO> list = new ArrayList<>();
+        for( OrderDetailsInterface o : orderDetailsInterfaces){
+
+            list.add(
+                    new ResponseOrderDetailsDTO(
+
+                    )
+            );
+        }
+
+        PaginatedResponseOrderDetailsDTO paginatedResponseOrderDetailsDTO = new PaginatedResponseOrderDetailsDTO(
+                list,
+                orderRepo.countAllOrderDetails(state)
+        );
+        return paginatedResponseOrderDetailsDTO;
+
+    }
+    }
+
+
+
